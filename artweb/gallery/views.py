@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Artwork
+from .models import Gallery  # ใช้โมเดล Gallery จริง ๆ
 
 def index(request):
-    arts = Artwork.objects.all()
+    arts = Gallery.objects.all()  # เปลี่ยนจาก Artwork เป็น Gallery
     return render(request, 'gallery/index.html', {'arts': arts})

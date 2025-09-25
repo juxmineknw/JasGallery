@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Artwork
+from .models import Gallery
 
-admin.site.register(Artwork)
+admin.site.register(Gallery)
