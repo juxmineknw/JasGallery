@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JasGallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Modal overlay */
+    .modal { display: none; position: fixed; z-index: 50; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.7); }
+    .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border-radius: 12px; max-width: 600px; text-align: center; position: relative; }
+    .close { position: absolute; top: 10px; right: 15px; font-size: 28px; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="container mx-auto px-4 py-12">
+    <h1 class="text-5xl font-bold text-center mb-12 text-gray-900">My Gallery</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {% for a in arts %}
+      <div class="relative bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer hover:shadow-2xl transition duration-300" onclick="openModal('{{ a.id }}')">
+        <img src="{{ a.image.url }}" alt="{{ a.title }}" class="w-full h-64 object-cover transform hover:scale-105 transition duration-500">
+        <div class="p-4 text-center">
+          <h2 class="text-xl font-semibold text-gray-900 mb-1">{{ a.title }}</h2>
+        </div>
+      </div>
+
+      <!-- Modal สำหรับแต่ละ artwork -->
+      <div id="modal-{{ a.id }}" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('{{ a.id }}')">&times;</span>
+          <img src="{{ a.image.url }}" alt="{{ a.title }}" class="w-full h-96 object-cover rounded-lg mb-4">
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ a.title }}</h2>
+          <p class="text-gray-700">{{ a.caption }}</p>
+        </div>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById('modal-' + id).style.display = 'block';
+    }
+    function closeModal(id) {
+      document.getElementById('modal-' + id).style.display = 'none';
+    }
+    // ปิด modal ถ้าคลิกข้างนอก
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(m => {
+        if(event.target == m) m.style.display = 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
